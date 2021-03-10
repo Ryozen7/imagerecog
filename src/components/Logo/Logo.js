@@ -10,7 +10,7 @@ const Logo = () => {
 			 	<div className="Tilt-inner"> 
 			 		<img style={{paddingTop:'5px'}} alt='Smart Recognition'src={smart} /> 
 			 		<p className='f5 ma0 pa0 center' style={{marginBottom:'10px'}}>
-			 			Drag your mouse here
+			 			Hello! Click Me.
 			 		</p>
 			 	</div>
 				
