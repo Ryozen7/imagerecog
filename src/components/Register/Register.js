@@ -33,7 +33,7 @@ class Register extends React.Component {
 		})
 		.then(response => response.json())
 		.then( user => {
-			if (user !== 'incorrect form submission') {
+			if (user !== 'incorrect form submission' && user !== 'Email Address Already Exist. Try a different one!') {
 				this.props.loadUser(user)
 				this.props.onRouteChange('home')
 			}

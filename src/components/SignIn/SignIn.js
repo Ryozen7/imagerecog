@@ -23,7 +23,6 @@ class SignIn extends React.Component {
 	gettingError = (user) => {
 		this.setState({geterror: user})
 	}
-
 	onSubmission = () => {
 		fetch('https://detectfaceserver.herokuapp.com/signin', {
 			method: 'post',

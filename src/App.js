@@ -107,7 +107,7 @@ class App extends Component {
 
   onSubmit = () => {
     this.setState({imageURL: this.state.input});
-      fetch('https://detectfaceserver.herokuapp.com', {
+      fetch('https://detectfaceserver.herokuapp.com/image', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify({
@@ -117,7 +117,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://detectfaceserver.herokuapp.com/image', {
+          fetch('https://detectfaceserver.herokuapp.com/imageurl', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify({
