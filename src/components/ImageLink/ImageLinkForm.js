@@ -29,7 +29,11 @@ const ImageLinkForm =({ onInputChange , onSubmit, box }) => {
 					box.length > 1
 					?<div className='f3 ma0 mt1 pa1 grow'>
 					{'There are ' + box.length + ' faces in the picture'}
-					</div>  : <div></div>
+					</div>  
+						: (box === false ?
+							 <div className='f3 ma0 mt1 pa1 grow'>
+							 {'Error Detecting. Image link is not attached. Find one'}
+							 </div>:<div></div>)
 					)
 			}
 		</div>

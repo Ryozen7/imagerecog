@@ -107,7 +107,7 @@ class App extends Component {
 
   onSubmit = () => {
     this.setState({imageURL: this.state.input});
-      fetch('https://detectfaceserver.herokuapp.com/image', {
+      fetch('https://imagedetectmodel.herokuapp.com/imageurl', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify({
@@ -117,7 +117,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://detectfaceserver.herokuapp.com/imageurl', {
+          fetch('https://imagedetectmodel.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body : JSON.stringify({
@@ -128,6 +128,9 @@ class App extends Component {
             .then(count => { this.setState(Object.assign(this.state.user, {entries: count}))
             })
             .catch(console.log)
+        } else {
+          this.setState({ box: false})
+
         }
         this.facerecogBox(this.calculateFaceLocation(response))
       })

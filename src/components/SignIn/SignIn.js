@@ -1,5 +1,4 @@
 import React from 'react';
-import GetError from './GetError';
 
 
 class SignIn extends React.Component {
@@ -20,11 +19,9 @@ class SignIn extends React.Component {
 		this.setState({signinPassword: event.target.value})
 	}
 
-	gettingError = (user) => {
-		this.setState({geterror: user})
-	}
+	
 	onSubmission = () => {
-		fetch('https://detectfaceserver.herokuapp.com/signin', {
+		fetch('https://imagedetectmodel.herokuapp.com/signin', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
@@ -34,14 +31,15 @@ class SignIn extends React.Component {
 		}) 
 		.then(response => response.json())
 		.then(user => {
-			if (user !== 'Wrong password or email') {
+			if (user.id) {
 				this.props.loadUser(user)
 				this.props.onRouteChange('home');
 			} else {
-			this.gettingError(true)
+			this.setState({geterror:user})
 			}
 		
 		})
+		.catch( err => console.log(err));
 	}
 
 	render () {
@@ -86,10 +84,16 @@ class SignIn extends React.Component {
 				 	</div>
 				</main>
 			</article>
-			{ geterror === true
+			{ geterror === 'wrong credentials'
 			? 
-			<GetError gettingError= { this.gettingError } />
-			: <div></div>
+				<div className="f3 fw6 mt1 pt1 mb2 pb1" > 
+				{'The email and password are wrong. Try again.'}
+				</div>
+			: (  geterror === 'incorrect form submission'
+				? <div className="f3 fw6 mt1 pt1 mb2 pb1">
+				{'Complete the Sign In Form.'}
+				</div> : <div></div>
+				)
 			}
 			</div>
 		);

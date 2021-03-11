@@ -6,7 +6,8 @@ class Register extends React.Component {
 			this.state = {
 				registeremail: '',
 				registerpass: '',
-				registername: ''
+				registername: '',
+				geterror:''
 			}
 	}
 
@@ -22,7 +23,7 @@ class Register extends React.Component {
 	}
 
 	onSubmitRegister = () => {
-		fetch('https://detectfaceserver.herokuapp.com/register', {
+		fetch('https://imagedetectmodel.herokuapp.com/register', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body : JSON.stringify({
@@ -33,19 +34,21 @@ class Register extends React.Component {
 		})
 		.then(response => response.json())
 		.then( user => {
-			if (user !== 'incorrect form submission' && user !== 'Email Address Already Exist. Try a different one!') {
+			if (user.id) {
 				this.props.loadUser(user)
 				this.props.onRouteChange('home')
+			} else {
+				this.setState({geterror:user})
 			}
 		})
-	
+		.catch( err => console.log(err));
 	}
 
 	render () {
-		// const { onRouteChange } = this.props;
+		const { geterror } = this.state;
 		return (
 			<div>
-				<article className="br3 ba dark-gray shadow-4 b--black-10 mv6 w-100 w-50-m w-25-l mw6 center">
+				<article className="br3 ba dark-gray shadow-4 b--black-10 mt6 mb3 w-100 w-50-m w-25-l mw6 center">
 				<main className="pa4 black-80">
 				  <div className="measure">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -88,6 +91,17 @@ class Register extends React.Component {
 				  </div>
 				</main>
 				</article>
+				{ geterror === 'unable to register'
+				? 
+				<div className="f3 fw6 mt1 pt1 mb2 pb1" > 
+				{'The email has already been registered. Try another one.'}
+				</div>
+					: (  geterror === 'incorrect form submission'
+					? <div className="f3 fw6 mt1 pt1 mb2 pb1">
+					{'Complete the Registration Form.'}
+					</div> : <div></div>
+					)
+			}
 			</div>
 		)
 	}
